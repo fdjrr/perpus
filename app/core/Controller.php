@@ -12,4 +12,15 @@ class Controller
         require_once __DIR__ . '/../models/' . $model . '.php';
         return new $model;
     }
+
+    public function dd($data)
+    {
+        var_dump($data);
+        die;
+    }
+
+    public function d($data)
+    {
+        var_dump($data);
+    }
 }
