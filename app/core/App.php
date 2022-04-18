@@ -10,15 +10,17 @@ class App
     {
         $url = $this->parseURL();
         if (!is_null($url)) {
-            // Controllers.
             if (file_exists("./app/controllers/" . ucfirst($url[0]) . ".php")) {
                 $this->controller = ucfirst($url[0]);
                 unset($url[0]);
+            } else {
+                $this->controller = "Errors";
+                unset($url[0]);
             }
+
             require_once __DIR__ . '/../controllers/' . $this->controller . '.php';
             $this->controller = new $this->controller;
 
-            // Method.
             if (isset($url[1])) {
                 if (method_exists($this->controller, strtolower($url[1]))) {
                     $this->method = strtolower($url[1]);
@@ -26,7 +28,6 @@ class App
                 }
             }
 
-            // Parameters.
             if (!empty($url)) {
                 $this->params = array_values($url);
             }
